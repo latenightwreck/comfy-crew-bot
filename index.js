@@ -1,7 +1,13 @@
 const Discord = require('discord.js')
-const client= new Discord.Client();
+const client= new Discord.Client()
 
-const { prefix, token } = require('./config.json');
+const config = require('config')
+
+const prefix = config.get('prefix')
+
+if (!config.get('token')) {
+  throw new Error('FATAL ERROR: token is undefined')
+}
 
 client.on('ready', () => {
   console.log("connected as ", client.user.tag)
@@ -16,4 +22,4 @@ client.on('message', message => {
   }
 })
 
-client.login(token)
+client.login(config.get('token'))
